@@ -6,7 +6,7 @@ import Box from "@/app/ui/box";
 
 async function Page(props: {
   params: Promise<{ id: string }>;
-  searchParams: Partial<TraderLevels>;
+  searchParams: Promise<Partial<TraderLevels>>;
 }) {
   const { id } = await props.params;
   const p = await props.searchParams;
@@ -21,6 +21,7 @@ async function Page(props: {
 
   return (
     <Box>
+      {id}
       <WeaponTreeVisualiser weapon={build} />
     </Box>
   );

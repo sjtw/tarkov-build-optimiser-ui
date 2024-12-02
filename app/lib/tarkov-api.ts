@@ -48,7 +48,6 @@ export async function getItemImages(
       }
     }
   `;
-  console.log(query);
   const res = await execute<{ id: string; baseImageLink: string }>(query);
 
   return res.map((data) => ({

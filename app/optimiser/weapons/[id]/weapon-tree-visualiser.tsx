@@ -4,28 +4,32 @@ import { getItemImages } from "@/app/lib/tarkov-api";
 
 async function ItemBox({ item }: { item: Item }) {
   const imageData = await getItemImages([item.id]);
-  console.log(imageData);
   return (
     <div className="p-4">
-      <ul className="p-2">
-        <li className="font-bold">{item.name}</li>
-        <li>
-          <img src={imageData[0].image} alt="" />
-        </li>
-        <li>Ergonomics Modifier: {item.ergonomics_modifier}</li>
-        <li>Recoil Modifier: {item.recoil_modifier}</li>
-      </ul>
-      Slots
-      <div className="m-4">
-        {item.slots.map((slot: Slot) => (
-          <div className="p-4 border" key={slot.id}>
-            {slot.name}
-
-            {slot.item && <ItemBox item={slot.item} />}
-            {!slot.item && <div className="p-4">Empty</div>}
+      <div className="flex">
+        <div className="flex-1">
+          <div className="font-bold">{item.name}</div>
+          <div>Ergonomics Modifier: {item.ergonomics_modifier}</div>
+          <div>Recoil Modifier: {item.recoil_modifier}</div>
+        </div>
+        <div className="flex-1">
+          <div>
+            <img src={imageData[0].image} alt="" />
           </div>
-        ))}
+        </div>
       </div>
+      {item.slots.length > 0 && (
+        <div className="m-4">
+          {item.slots.map((slot: Slot) => (
+            <div className="p-4 border" key={slot.id}>
+              {slot.name}
+
+              {slot.item && <ItemBox item={slot.item} />}
+              {!slot.item && <div className="p-4">Empty</div>}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

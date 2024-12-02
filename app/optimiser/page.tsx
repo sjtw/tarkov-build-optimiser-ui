@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { getWeaponDefaultPresets } from "@/app/lib/tarkov-api";
 import { Metadata } from "next";
 import WeaponBrowser from "@/app/ui/weapon-browser";
@@ -12,7 +12,9 @@ async function Page() {
 
   return (
     <div>
-      <WeaponBrowser presets={presets} />
+      <Suspense>
+        <WeaponBrowser presets={presets} />
+      </Suspense>
     </div>
   );
 }

@@ -31,7 +31,6 @@ function WeaponBrowser({ presets }: Props) {
     const params = new URLSearchParams(searchParams);
     if (trader && level) {
       params.set(trader, level);
-      console.log(params);
       replace(`${pathname}?${params.toString()}`);
     }
   };
