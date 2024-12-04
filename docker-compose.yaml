@@ -1,0 +1,16 @@
+version: "2"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: tarkov-build-optimiser-web
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - POSTGRES_URL=${POSTGRES_URL}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+    ports:
+      - "${PORT}:3000"
