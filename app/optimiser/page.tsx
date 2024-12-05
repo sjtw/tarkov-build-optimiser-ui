@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
-import { getWeaponDefaultPresets } from "@/app/lib/tarkov-api";
+import React from "react";
 import { Metadata } from "next";
-import WeaponBrowser from "@/app/ui/weapon-browser";
+import Filters from "@/app/ui/filters/filters";
+import { getWeaponDefaultPresets } from "@/app/lib/tarkov-api";
 
 export const metadata: Metadata = {
   title: "Optimiser",
@@ -9,12 +9,15 @@ export const metadata: Metadata = {
 
 async function Page() {
   const presets = await getWeaponDefaultPresets();
-
   return (
-    <div>
-      <Suspense>
-        <WeaponBrowser presets={presets} />
-      </Suspense>
+    <div className="flex pb-0 h-full">
+      <Filters presets={presets} />
+      <div className="flex-grow overflow-y-scroll p-4">
+        <p className="text-center w-full justify-center">
+          Weapon build will be displayed once a weapon & trader levels are
+          selected
+        </p>
+      </div>
     </div>
   );
 }

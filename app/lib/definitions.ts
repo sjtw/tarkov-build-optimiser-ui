@@ -10,34 +10,14 @@ export type TraderLevels = {
 export enum TraderLevelNames {
   Prapor = "prapor_level",
   Peacekeeper = "peacekeeper_level",
-  Jager = "jaeger_level",
+  Jaeger = "jaeger_level",
   Mechanic = "mechanic_level",
   Skier = "skier_level",
 }
 
-// export type OptimumBuild = {
-//   item_id: number;
-//   build: string;
-//   build_type: string;
-//   is_subtree: boolean;
-//   recoil_sum: number;
-//   ergonomics_sum: number;
-//   name: string;
-//   jaeger_level: number;
-//   prapor_level: number;
-//   peacekeeper_level: number;
-//   mechanic_level: number;
-//   skier_level: number;
-// };
-
 export type ItemImageDetails = {
   id: string;
   image: string;
-};
-
-export type WeaponSummary = {
-  item_id: string;
-  name: string;
 };
 
 export type WeaponPreset = {
@@ -58,20 +38,7 @@ export type WeaponPreset = {
 
 export type GroupedWeaponPresets = Record<string, WeaponPreset[]>;
 
-export interface WeaponTree {
-  item_id: string;
-  build: Item;
-  build_type: BuildType;
-  is_subtree: boolean;
-  recoil_sum: number;
-  ergonomics_sum: number;
-  name: string;
-  jaeger_level: number;
-  prapor_level: number;
-  peacekeeper_level: number;
-  mechanic_level: number;
-  skier_level: number;
-}
+export type WeaponTree = Item;
 
 export interface Slot {
   id: string;

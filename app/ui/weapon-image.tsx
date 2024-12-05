@@ -1,7 +1,15 @@
 import React from "react";
 
-function WeaponImage({ url }: { url: string }) {
-  return <img src={url} className="aspect-auto h-16" />;
+function WeaponImage({ id, name }: { id: string; name: string }) {
+  return (
+    <img
+      id={id}
+      key={id}
+      src={`/images/tarkov/${id}.webp`}
+      alt={`${name} image.`}
+      className="object-scale-down"
+    />
+  );
 }
 
 export default WeaponImage;

@@ -1,31 +1,29 @@
 import React from "react";
 import { Item, Slot, WeaponTree } from "@/app/lib/definitions";
-import { getItemImages } from "@/app/lib/tarkov-api";
 
 async function ItemBox({ item }: { item: Item }) {
-  const imageData = await getItemImages([item.id]);
   return (
-    <div className="p-4">
+    <div className="p-4 my-4  bg-neutral-800">
       <div className="flex">
         <div className="flex-1">
-          <div className="font-bold">{item.name}</div>
+          <div>{item.name}</div>
+          <div>
+            <img src={`/images/tarkov/${item.id}.webp`} alt="" />
+          </div>
+        </div>
+        <div className="flex-1">
           <div>Ergonomics Modifier: {item.ergonomics_modifier}</div>
           <div>Recoil Modifier: {item.recoil_modifier}</div>
         </div>
-        <div className="flex-1">
-          <div>
-            <img src={imageData[0].image} alt="" />
-          </div>
-        </div>
       </div>
       {item.slots.length > 0 && (
-        <div className="m-4">
+        <div className="m-4 p-4">
           {item.slots.map((slot: Slot) => (
-            <div className="p-4 border" key={slot.id}>
-              {slot.name}
+            <div className="p-4  bg-neutral-900" key={slot.id}>
+              <span className="font-bold">{slot.name}</span>
 
               {slot.item && <ItemBox item={slot.item} />}
-              {!slot.item && <div className="p-4">Empty</div>}
+              {!slot.item && <div className="p-4">Empty/Default</div>}
             </div>
           ))}
         </div>
@@ -36,13 +34,13 @@ async function ItemBox({ item }: { item: Item }) {
 
 function WeaponTreeVisualiser({ weapon }: { weapon: WeaponTree }) {
   return (
-    <div>
+    <div className="rounded-md p-4">
       <ul>
-        <li>Build Type: {weapon.build_type}</li>
-        <li>Ergonomics: {weapon.ergonomics_sum}</li>
-        <li>Recoil: {weapon.recoil_sum}</li>
+        <li>Weapon: {weapon.name}</li>
+        <li>Total Ergonomics: {weapon.ergonomics_sum}</li>
+        <li>Total Recoil: {weapon.recoil_sum}</li>
       </ul>
-      <ItemBox item={weapon.build} />
+      <ItemBox item={weapon} />
     </div>
   );
 }

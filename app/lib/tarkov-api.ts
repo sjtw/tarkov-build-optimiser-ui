@@ -56,6 +56,19 @@ export async function getItemImages(
   }));
 }
 
+export async function getAllImages(): Promise<
+  { id: string; baseImageLink: string }[]
+> {
+  const query = `{
+    items {
+      id
+      baseImageLink
+    }
+  }`;
+
+  return await execute<{ id: string; baseImageLink: string }>(query);
+}
+
 export async function getWeaponDefaultPresets(): Promise<GroupedWeaponPresets> {
   const presets = await execute<WeaponPreset>(`
     {

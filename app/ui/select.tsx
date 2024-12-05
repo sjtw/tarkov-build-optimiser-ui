@@ -1,5 +1,6 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import clsx from "clsx";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Option = {
   name: string;
@@ -19,23 +20,33 @@ export function SelectLabel({
 export interface SelectProps extends React.HTMLProps<HTMLSelectElement> {
   placeholderText: string;
   options: Option[];
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
-  value?: string;
+  param: string;
 }
 
 function Select({
   placeholderText,
   options,
-  onChange,
   className,
-  value,
+  param,
   ...otherProps
 }: SelectProps) {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const params = new URLSearchParams(searchParams);
+
+    params.set(param, e.target.value);
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  const value = searchParams.get(param) || "";
+
   return (
     <select
       className={clsx(" text-black bg-gray-300", className)}
-      defaultValue=""
       onChange={onChange}
       value={value}
       {...otherProps}
