@@ -12,7 +12,7 @@ function Card({ title, children, className }: Props) {
   return (
     <Box
       className={clsx(
-        "my-4 p-2 overflow-scroll hover:bg-teal-950 flex flex-col text-sm border border-teal-600 rounded-md",
+        "my-4 p-2 hover:bg-teal-950 flex flex-col text-sm border border-teal-600 rounded-md",
         className,
       )}
     >

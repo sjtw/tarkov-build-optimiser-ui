@@ -16,7 +16,7 @@ async function ItemBox({ item }: { item: Item }) {
           <div>Recoil Modifier: {item.recoil_modifier}</div>
         </div>
       </div>
-      {item.slots.length > 0 && (
+      {item.slots && item.slots.length > 0 && (
         <div className="m-4 p-4">
           {item.slots.map((slot: Slot) => (
             <div className="p-4  bg-neutral-900" key={slot.id}>
