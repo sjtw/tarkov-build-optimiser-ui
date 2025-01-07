@@ -24,6 +24,7 @@ export type WeaponPreset = {
     default: boolean;
     baseItem: {
       id: string;
+      name: string;
       bsgCategory: {
         name: string;
       };

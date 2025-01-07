@@ -1,10 +1,11 @@
 import React from "react";
 import { TraderLevelNames, TraderLevels } from "@/app/lib/definitions";
 import WeaponTreeVisualiser from "@/app/optimiser/weapons/[id]/weapon-tree-visualiser";
+import WeaponPresetProvider from "@/app/ui/weapon-preset-context";
 
 async function Page(props: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<Partial<TraderLevels>>;
+  searchParams: Promise<Partial<TraderLevels>> & { name: string };
 }) {
   const { id } = await props.params;
   const p = await props.searchParams;
@@ -16,7 +17,15 @@ async function Page(props: {
     [TraderLevelNames.Skier]: p[TraderLevelNames.Skier] || "4",
   };
 
-  return <WeaponTreeVisualiser id={id} levels={levels} />;
+  return (
+    <WeaponPresetProvider>
+      <WeaponTreeVisualiser
+        id={id}
+        name={p.name || "unknown"}
+        levels={levels}
+      />
+    </WeaponPresetProvider>
+  );
 }
 
 export default Page;

@@ -8,9 +8,11 @@ import { EvaluationStatus } from "@/app/optimiser/weapons/[id]/details";
 async function WeaponTreeVisualiser({
   id,
   levels,
+  name,
 }: {
   id: string;
   levels: TraderLevels;
+  name: string;
 }) {
   try {
     const build = await getOptimumBuild(id, levels);
@@ -27,7 +29,7 @@ async function WeaponTreeVisualiser({
           </div>
         )}
         {build && build.status !== "Completed" && (
-          <EvaluationStatus id={id} status={build.status} />
+          <EvaluationStatus id={id} name={name} status={build.status} />
         )}
       </Box>
     );

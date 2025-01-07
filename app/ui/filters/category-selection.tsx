@@ -6,7 +6,7 @@ import { WeaponPresetContext } from "@/app/ui/weapon-preset-context";
 
 function CategorySelection() {
   const weapons = useContext(WeaponPresetContext);
-  const categories = Object.keys(weapons.weaponsByCategory).map((k) => ({
+  const categories = Object.keys(weapons.presetsByCategory).map((k) => ({
     value: k,
     name: k,
   }));

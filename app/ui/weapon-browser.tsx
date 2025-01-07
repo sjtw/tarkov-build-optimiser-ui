@@ -13,21 +13,26 @@ function WeaponBrowser({ selectedId }: Props) {
   const searchParams = useSearchParams();
 
   const category = searchParams.get("weapon_category") || "";
-  const weapons = useContext(WeaponPresetContext);
+  const { presetsByCategory } = useContext(WeaponPresetContext);
 
-  const categoryWeapons = weapons.weaponsByCategory[category];
+  const categoryPresets = presetsByCategory[category];
 
   return (
     <div className="p-4">
-      {categoryWeapons?.map((w) => (
-        <WeaponCard
-          id={w.id}
-          name={w.name}
-          selected={selectedId === w.id}
-          key={`weapon-img-${w.id}`}
-          href={`/optimiser/weapons/${w.properties.baseItem.id}?${searchParams.toString()}`}
-        />
-      ))}
+      {categoryPresets?.map((w) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("name", w.properties.baseItem.name);
+
+        return (
+          <WeaponCard
+            id={w.id}
+            name={w.name}
+            selected={selectedId === w.id}
+            key={`weapon-img-${w.id}`}
+            href={`/optimiser/weapons/${w.properties.baseItem.id}?${params.toString()}`}
+          />
+        );
+      })}
     </div>
   );
 }

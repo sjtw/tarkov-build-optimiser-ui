@@ -59,6 +59,7 @@ export async function getWeaponDefaultPresets(): Promise<WeaponPreset[]> {
             default
             baseItem {
               id
+              name
               bsgCategory {
                 name
               }

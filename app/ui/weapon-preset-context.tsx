@@ -6,17 +6,17 @@ import { getWeaponDefaultPresets } from "@/app/lib/tarkov-api";
 
 type WeaponPresetContext = {
   status: string;
-  weapons: WeaponPreset[];
-  weaponsById: Record<string, WeaponPreset>;
-  weaponsByCategory: Record<string, WeaponPreset[]>;
+  presets: WeaponPreset[];
+  presetsById: Record<string, WeaponPreset>;
+  presetsByCategory: Record<string, WeaponPreset[]>;
   errorMsg: string;
 };
 
 export const WeaponPresetContext = createContext<WeaponPresetContext>({
   status: "pending",
-  weapons: [],
-  weaponsById: {},
-  weaponsByCategory: {},
+  presets: [],
+  presetsById: {},
+  presetsByCategory: {},
   errorMsg: "",
 });
 
@@ -43,6 +43,7 @@ const useWeaponPresets = (): WeaponPresetContext => {
   const [weaponsByCategory, setWeaponsByCategory] = useState<
     Record<string, WeaponPreset[]>
   >({});
+  const [] = useState<string>();
   const [status, setStatus] = useState<"pending" | "complete" | "error">(
     "pending",
   );
@@ -61,10 +62,10 @@ const useWeaponPresets = (): WeaponPresetContext => {
           {},
         );
 
-        setWeapons(presets);
-        setWeaponsById(byId);
+        setWeapons([...presets]);
+        setWeaponsById({ ...byId });
         const byCategory = groupPresetsByCategory(presets);
-        setWeaponsByCategory(byCategory);
+        setWeaponsByCategory({ ...byCategory });
 
         setStatus("complete");
       } catch (err) {
@@ -84,10 +85,10 @@ const useWeaponPresets = (): WeaponPresetContext => {
 
   return {
     status,
-    weapons,
-    weaponsById,
+    presets: weapons,
+    presetsById: weaponsById,
     errorMsg,
-    weaponsByCategory,
+    presetsByCategory: weaponsByCategory,
   };
 };
 
@@ -96,12 +97,18 @@ export default function WeaponPresetProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { status, weapons, weaponsById, errorMsg, weaponsByCategory } =
+  const { status, presets, presetsById, errorMsg, presetsByCategory } =
     useWeaponPresets();
 
   return (
     <WeaponPresetContext.Provider
-      value={{ status, weapons, weaponsById, errorMsg, weaponsByCategory }}
+      value={{
+        status,
+        presets: presets,
+        presetsById: presetsById,
+        errorMsg,
+        presetsByCategory: presetsByCategory,
+      }}
     >
       {children}
     </WeaponPresetContext.Provider>
