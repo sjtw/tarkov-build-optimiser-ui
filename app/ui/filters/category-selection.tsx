@@ -1,15 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import Select, { SelectLabel } from "@/app/ui/select";
-import { GroupedWeaponPresets } from "@/app/lib/definitions";
+import { WeaponPresetContext } from "@/app/ui/weapon-preset-context";
 
-interface Props {
-  presets: GroupedWeaponPresets;
-}
-
-function CategorySelection({ presets }: Props) {
-  const categories = Object.keys(presets).map((k) => ({
+function CategorySelection() {
+  const weapons = useContext(WeaponPresetContext);
+  const categories = Object.keys(weapons.weaponsByCategory).map((k) => ({
     value: k,
     name: k,
   }));

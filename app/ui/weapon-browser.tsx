@@ -1,43 +1,33 @@
 "use client";
 
-import React from "react";
-import { GroupedWeaponPresets } from "@/app/lib/definitions";
-import Card from "@/app/ui/card";
-import Link from "next/link";
+import React, { useContext } from "react";
 import { useSearchParams } from "next/navigation";
-import WeaponImage from "@/app/ui/weapon-image";
+import WeaponCard from "@/app/ui/filters/weapon-card";
+import { WeaponPresetContext } from "@/app/ui/weapon-preset-context";
 
 interface Props {
-  presets: GroupedWeaponPresets;
   selectedId?: string;
 }
 
-function WeaponBrowser({ presets, selectedId }: Props) {
+function WeaponBrowser({ selectedId }: Props) {
   const searchParams = useSearchParams();
 
   const category = searchParams.get("weapon_category") || "";
-  const weapons = (category !== "" && presets[category]) || null;
+  const weapons = useContext(WeaponPresetContext);
+
+  const categoryWeapons = weapons.weaponsByCategory[category];
 
   return (
     <div className="p-4">
-      {weapons &&
-        weapons.map((w) => (
-          <Link
-            key={`weapon-img-${w.id}`}
-            href={`/optimiser/weapons/${w.properties.baseItem.id}?${searchParams.toString()}`}
-          >
-            <Card
-              className={
-                w.properties.baseItem.id === selectedId
-                  ? "bg-teal-800"
-                  : undefined
-              }
-              title={w.name}
-            >
-              <WeaponImage id={w.id} name={w.name} />
-            </Card>
-          </Link>
-        ))}
+      {categoryWeapons?.map((w) => (
+        <WeaponCard
+          id={w.id}
+          name={w.name}
+          selected={selectedId === w.id}
+          key={`weapon-img-${w.id}`}
+          href={`/optimiser/weapons/${w.properties.baseItem.id}?${searchParams.toString()}`}
+        />
+      ))}
     </div>
   );
 }

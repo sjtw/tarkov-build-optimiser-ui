@@ -15,11 +15,6 @@ export enum TraderLevelNames {
   Skier = "skier_level",
 }
 
-export type ItemImageDetails = {
-  id: string;
-  image: string;
-};
-
 export type WeaponPreset = {
   name: string;
   gridImageLink: string;
@@ -56,6 +51,7 @@ export interface Item {
   evaluation_type: BuildType;
   recoil_modifier: number;
   ergonomics_modifier: number;
+  status: string;
 }
 
 export enum BuildType {

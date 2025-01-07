@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { TraderLevelNames } from "@/app/lib/definitions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import clsx from "clsx";
@@ -43,7 +43,15 @@ function LevelButtonGroup({ param, label }: LevelButtonGroupParams) {
     replace(`${pathname}?${params.toString()}`);
   };
 
-  const value = searchParams.get(param) || "1";
+  const value = searchParams.get(param) || null;
+
+  useEffect(() => {
+    if (!value) {
+      const params = new URLSearchParams(searchParams);
+      params.set(param, "4");
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, [param, pathname, replace, searchParams, value]);
 
   return (
     <Box className="m-1 p-1">
