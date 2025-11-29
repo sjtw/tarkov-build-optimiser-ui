@@ -21,7 +21,8 @@ import { TraderLevelNames } from "@/app/lib/definitions";
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import WeaponCardImage from "@/app/optimiser-v2/_components/weapon-card-image";
-import Image from "next/image";
+import TraderLevelCard from "@/app/optimiser-v2/_components/trader-level-card";
+import { Text, Button } from "@/app/optimiser-v2/_components/ui";
 
 type FilterRailProps = {
   category?: string;
@@ -106,12 +107,11 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
     <Panel className="space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-[var(--tarkov-text-muted)]">
-            Tarkov Optimiser
-          </p>
+          <Text variant="meta">Tarkov Optimiser</Text>
           <h1 className="text-3xl font-semibold text-white">Build Visualiser</h1>
         </div>
-        <button
+        <Button
+          variant="primary"
           onClick={() => {
             setSearchTerm("");
             const defaults: Record<string, string | undefined> = {
@@ -125,17 +125,16 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
             });
             updateParams(defaults);
           }}
-          className="rounded-full border border-[var(--tarkov-border-strong)]/60 px-4 py-2 text-xs uppercase tracking-widest text-[var(--tarkov-highlight)] transition hover:border-[var(--tarkov-highlight)] hover:text-white"
         >
           Reset Filters
-        </button>
+        </Button>
       </div>
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,2fr)]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         <div className="space-y-4">
-          <h2 className="text-sm uppercase tracking-widest text-[var(--tarkov-text-muted)]">
+          <Text as="h2" variant="label">
             Trader Levels
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          </Text>
+          <div className="grid gap-4 sm:grid-cols-1">
             {TRADER_LEVELS.map(({ label, param, image }) => (
               <LevelSelector
                 key={param}
@@ -148,14 +147,14 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
           </div>
         </div>
         <div className="space-y-4">
-          <h2 className="text-sm uppercase tracking-widest text-[var(--tarkov-text-muted)]">
+          <Text as="h2" variant="label">
             Weapon Catalogue
-          </h2>
+          </Text>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-[var(--tarkov-text-muted)]">
+              <Text as="label" variant="label">
                 Category
-              </label>
+              </Text>
               <select
                 className="w-full rounded-xl border border-[var(--tarkov-border-strong)] bg-[var(--tarkov-bg-800)]/90 px-3 py-2 text-sm text-white focus:border-[var(--tarkov-highlight)] focus:outline-none"
                 value={activeCategory || ""}
@@ -171,9 +170,9 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
           </select>
         </div>
         <div className="space-y-2">
-          <label className="text-xs uppercase tracking-widest text-[var(--tarkov-text-muted)]">
+          <Text as="label" variant="label">
             Search
-          </label>
+          </Text>
           <div className="relative">
             <input
               type="text"
@@ -196,19 +195,15 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
       </div>
           <div className="max-h-[360px] space-y-2 overflow-y-auto pr-2">
             {status === "pending" && (
-              <p className="text-sm text-[var(--tarkov-text-muted)]">
-                Loading presets...
-              </p>
+              <Text variant="subtle">Loading presets...</Text>
             )}
             {status === "error" && (
-              <p className="text-sm text-[var(--tarkov-danger)]">
+              <Text variant="subtle" className="text-[var(--tarkov-danger)]">
                 Failed to load weapons.
-              </p>
+              </Text>
             )}
             {status === "complete" && filteredWeapons.length === 0 && (
-              <p className="text-sm text-[var(--tarkov-text-muted)]">
-                No weapons match your filters.
-              </p>
+              <Text variant="subtle">No weapons match your filters.</Text>
             )}
             {filteredWeapons.map((preset) => (
               <button
@@ -262,37 +257,12 @@ function LevelSelector({ label, param, image, onSelect }: LevelSelectorProps) {
   const value = searchParams.get(param) || DEFAULT_TRADER_LEVEL;
 
   return (
-    <div className="flex items-stretch gap-3 rounded-2xl border border-[var(--tarkov-border)] bg-[var(--tarkov-panel-muted)]/60 p-3">
-      <div className="relative aspect-square flex-shrink-0 self-stretch overflow-hidden rounded-xl border border-[var(--tarkov-border)] bg-[var(--tarkov-panel)]">
-        <Image
-          src={image}
-          alt={label}
-          fill
-          sizes="80px"
-          className="object-cover"
-        />
-      </div>
-      <div className="flex flex-1 flex-col gap-2">
-        <div className="text-xs uppercase tracking-widest text-[var(--tarkov-text-muted)]">
-          {label}
-        </div>
-        <div className="grid grid-cols-4 gap-2">
-          {levelValues.map((level) => (
-            <button
-              key={level}
-              onClick={() => onSelect(param, level)}
-              className={clsx(
-                "rounded-lg border px-2 py-1 text-sm transition",
-                value === level
-                  ? "border-[var(--tarkov-accent)] bg-[var(--tarkov-accent)]/20 text-white"
-                  : "border-[var(--tarkov-border)] text-[var(--tarkov-text-muted)] hover:border-[var(--tarkov-border-strong)] hover:text-white",
-              )}
-            >
-              {level}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+    <TraderLevelCard
+      label={label}
+      image={image}
+      selectedValue={value}
+      levels={levelValues}
+      onSelect={(level) => onSelect(param, level)}
+    />
   );
 }

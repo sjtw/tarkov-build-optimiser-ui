@@ -1,13 +1,10 @@
 import React from "react";
-import { TraderLevels, WeaponTree } from "@/app/lib/definitions";
+import { TraderLevels } from "@/app/lib/definitions";
 import { getOptimumBuild } from "@/app/lib/optimiser-api";
 import DataState from "@/app/ui/data-state";
 import Panel from "@/app/ui/panel";
-import StatBadge from "@/app/ui/stat-badge";
-import TarkovImage from "@/app/ui/tarkov-image";
-import { TRADER_LEVELS } from "@/app/optimiser-v2/constants";
 import BuildTree from "@/app/optimiser-v2/_components/build-tree";
-import WeaponCardImage from "@/app/optimiser-v2/_components/weapon-card-image";
+import BuildSummary from "@/app/optimiser-v2/_components/build-summary";
 
 type BuildSurfaceProps = {
   weaponId?: string;
@@ -15,85 +12,6 @@ type BuildSurfaceProps = {
   weaponPresetId?: string;
   traderLevels: TraderLevels;
 };
-
-function SummaryRow({
-  build,
-  traderLevels,
-  weaponName,
-  weaponPresetId,
-  weaponId,
-}: {
-  build: WeaponTree;
-  traderLevels: TraderLevels;
-  weaponName?: string;
-  weaponPresetId?: string;
-  weaponId?: string;
-}) {
-  return (
-    <Panel className="space-y-5">
-      <div className="rounded-xl border border-[var(--tarkov-border-strong)] bg-[var(--tarkov-bg-800)]/85 p-4 shadow-inner shadow-black/40">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-4">
-            {weaponPresetId ? (
-              <WeaponCardImage
-                presetId={weaponPresetId}
-                weaponId={weaponId || build.id}
-                name={weaponName || build.name}
-                className="w-40"
-              />
-            ) : (
-              <TarkovImage
-                itemId={weaponId || build.id}
-                alt={build.name || "Weapon"}
-                width={96}
-                height={96}
-              />
-            )}
-            <div>
-              <p className="text-xs uppercase tracking-[0.4em] text-[var(--tarkov-text-muted)]">
-                Optimal Build
-              </p>
-              <h2 className="text-2xl font-semibold text-white">
-                {weaponName || build.name}
-              </h2>
-              <p className="text-sm text-[var(--tarkov-text-muted)]">
-                Focus: {build.evaluation_type}
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <StatBadge
-              label="Ergonomics"
-              value={build.ergonomics_sum.toFixed(1)}
-              tone="positive"
-            />
-            <StatBadge
-              label="Recoil"
-              value={build.recoil_sum.toFixed(1)}
-              tone="negative"
-            />
-            <StatBadge
-              label="Status"
-              value={build.status}
-              tone={build.status === "Completed" ? "positive" : "warning"}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {TRADER_LEVELS.map((level) => (
-          <div
-            key={level.param}
-            className="rounded-lg border border-[var(--tarkov-border)] bg-[var(--tarkov-panel-muted)]/60 px-3 py-2 text-xs uppercase tracking-widest text-[var(--tarkov-text-muted)]"
-          >
-            <span className="text-white">{level.label}</span>{" "}
-            {traderLevels[level.param]}
-          </div>
-        ))}
-      </div>
-    </Panel>
-  );
-}
 
 export default async function BuildSurface({
   weaponId,
@@ -146,7 +64,7 @@ export default async function BuildSurface({
 
     return (
       <>
-        <SummaryRow
+        <BuildSummary
           build={build}
           traderLevels={traderLevels}
           weaponName={weaponName}
