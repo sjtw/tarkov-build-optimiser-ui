@@ -50,7 +50,7 @@ export default function BuildSummary({
               <Text variant="subtle">Focus: {build.evaluation_type}</Text>
             </div>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex gap-3">
             <StatBadge
               label="Ergonomics"
               value={build.ergonomics_sum.toFixed(1)}

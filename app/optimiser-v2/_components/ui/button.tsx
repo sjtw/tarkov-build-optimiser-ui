@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-const variantMap = {
+const variantMap: Record<string, string> = {
   primary:
     "rounded-full border border-[var(--tarkov-highlight)] px-4 py-2 text-xs uppercase tracking-widest text-[var(--tarkov-highlight)] transition hover:border-white hover:text-white",
   outline:

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Nav from "@/app/ui/nav/nav";
 import WeaponPresetProvider from "@/app/ui/weapon-preset-context";
 
 const geistSans = localFont({

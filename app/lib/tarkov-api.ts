@@ -4,10 +4,8 @@ const API_URL = "https://api.tarkov.dev/graphql";
 
 type UnknownObject = { [key: string]: unknown };
 
-type TarkovDevResponse<T extends UnknownObject> = {
-  data: {
-    items: T[];
-  };
+type TarkovDevItemsResponse<T extends UnknownObject> = {
+  data: T;
 };
 
 async function execute<T extends UnknownObject>(query: string) {
@@ -25,7 +23,7 @@ async function execute<T extends UnknownObject>(query: string) {
   if (res.status === 200) {
     const body = (await res.json()) as TarkovDevResponse<T>;
 
-    return body.data.items;
+    return body.data;
   } else {
     throw new Error(
       `Tarkov.dev responded with unexpected status - ${res.status}`,
@@ -33,21 +31,28 @@ async function execute<T extends UnknownObject>(query: string) {
   }
 }
 
+type ImageRef = {
+  id: string;
+  baseImageLink: string;
+};
+
 export async function getAllImages(): Promise<
-  { id: string; baseImageLink: string }[]
+  { items: ImageRef[], traders: ImageRef[] }
 > {
-  const query = `{
+  return await execute<{ id: string; baseImageLink: string }>(`{
     items {
       id
       baseImageLink
     }
-  }`;
-
-  return await execute<{ id: string; baseImageLink: string }>(query);
+    traders {
+      name
+      imageLink
+    }
+  }`);
 }
 
 export async function getWeaponDefaultPresets(): Promise<WeaponPreset[]> {
-  return await execute<WeaponPreset>(`
+  const presetsResponse = await execute<WeaponPreset>(`
     {
       items(type: preset, categoryNames: Weapon) {
         id
@@ -68,4 +73,6 @@ export async function getWeaponDefaultPresets(): Promise<WeaponPreset[]> {
         }
       }
     }`);
+
+    return presetsResponse.items;
 }

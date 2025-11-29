@@ -33,7 +33,7 @@ export default function TraderLevelCard({
               onClick={() => onSelect(level)}
               className={clsx(
                 selectedValue === level
-                  ? "border-[var(--tarkov-accent)] bg-[var(--tarkov-accent)]/20 text-white"
+                  ? "border-[var(--tarkov-highlight)]"
                   : undefined,
               )}
             >

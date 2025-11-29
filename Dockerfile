@@ -19,7 +19,6 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
@@ -37,6 +36,9 @@ RUN \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
+
+RUN mkdir -p /app/public/images/tarkov
+RUN npm run collect-images
 
 # Production image, copy all the files and run next
 FROM base AS runner

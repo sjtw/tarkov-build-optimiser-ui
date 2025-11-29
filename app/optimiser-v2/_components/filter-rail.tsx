@@ -111,7 +111,7 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
           <h1 className="text-3xl font-semibold text-white">Build Visualiser</h1>
         </div>
         <Button
-          variant="primary"
+          variant="pill"
           onClick={() => {
             setSearchTerm("");
             const defaults: Record<string, string | undefined> = {
