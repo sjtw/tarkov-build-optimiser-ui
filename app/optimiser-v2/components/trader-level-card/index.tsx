@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import clsx from "clsx";
-import { Surface, Text, Stack, Button } from "@/app/optimiser-v2/_components/ui";
+import { Surface, Text, Stack, Button } from "@/app/optimiser-v2/components/ui";
 
 type TraderLevelCardProps = {
   label: string;

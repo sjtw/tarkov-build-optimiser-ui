@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Text } from "@/app/optimiser-v2/_components/ui";
+import { Text } from "@/app/optimiser-v2/components/ui";
 
 type StatLineProps = {
   label: string;

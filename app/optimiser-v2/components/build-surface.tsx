@@ -3,8 +3,8 @@ import { TraderLevels } from "@/app/lib/definitions";
 import { getOptimumBuild } from "@/app/lib/optimiser-api";
 import DataState from "@/app/ui/data-state";
 import Panel from "@/app/ui/panel";
-import BuildTree from "@/app/optimiser-v2/_components/build-tree";
-import BuildSummary from "@/app/optimiser-v2/_components/build-summary";
+import BuildTree from "@/app/optimiser-v2/components/build-tree";
+import BuildSummary from "@/app/optimiser-v2/components/build-summary";
 
 type BuildSurfaceProps = {
   weaponId?: string;

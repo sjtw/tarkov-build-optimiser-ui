@@ -6,9 +6,9 @@ import {
   WEAPON_PARAM,
   WEAPON_PRESET_PARAM,
 } from "@/app/optimiser-v2/constants";
-import FilterRail from "@/app/optimiser-v2/_components/filter-rail";
-import BuildSurface from "@/app/optimiser-v2/_components/build-surface";
-import BuildSurfaceSkeleton from "@/app/optimiser-v2/_components/build-surface-skeleton";
+import FilterRail from "@/app/optimiser-v2/components/filter-rail";
+import BuildSurface from "@/app/optimiser-v2/components/build-surface";
+import BuildSurfaceSkeleton from "@/app/optimiser-v2/components/build-surface-skeleton";
 import type { Metadata } from "next";
 
 type PageProps = {
@@ -16,8 +16,8 @@ type PageProps = {
 };
 
 export const metadata: Metadata = {
-  title: "Optimiser",
-  description: "Visualise Escape From Tarkov weapon builds with style.",
+  title: "Tarkov Build Optimiser",
+  description: "Find the best builds for your favourite weapons in Escape From Tarkov.",
 };
 
 export default async function HomePage({ searchParams }: PageProps) {

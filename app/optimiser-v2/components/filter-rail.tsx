@@ -20,9 +20,9 @@ import {
 import { TraderLevelNames } from "@/app/lib/definitions";
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import WeaponCardImage from "@/app/optimiser-v2/_components/weapon-card-image";
-import TraderLevelCard from "@/app/optimiser-v2/_components/trader-level-card";
-import { Text, Button } from "@/app/optimiser-v2/_components/ui";
+import WeaponCardImage from "@/app/optimiser-v2/components/weapon-card-image";
+import TraderLevelCard from "@/app/optimiser-v2/components/trader-level-card";
+import { Text, Button } from "@/app/optimiser-v2/components/ui";
 
 type FilterRailProps = {
   category?: string;
