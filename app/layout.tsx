@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import WeaponPresetProvider from "@/app/ui/weapon-preset-context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,13 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden`}>
-        <WeaponPresetProvider>
-          <div className="optimiser-v2-shell min-h-screen">
-            <div className="flex h-screen flex-col">
-              <div className="flex-1 overflow-y-auto">{children}</div>
-            </div>
+        <div className="optimiser-v2-shell min-h-screen">
+          <div className="flex h-screen flex-col">
+            <div className="flex-1 overflow-y-auto">{children}</div>
           </div>
-        </WeaponPresetProvider>
+        </div>
       </body>
     </html>
   );

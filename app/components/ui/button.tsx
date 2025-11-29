@@ -14,6 +14,7 @@ const variantMap: Record<string, string> = {
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: keyof typeof variantMap;
+  "aria-label"?: string;
 };
 
 export default function Button({ variant = "primary", className, children, ...props }: ButtonProps) {

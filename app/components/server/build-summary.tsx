@@ -1,11 +1,11 @@
 import React from "react";
 import { TraderLevels, WeaponTree } from "@/app/lib/definitions";
-import Panel from "@/app/ui/panel";
-import StatBadge from "@/app/ui/stat-badge";
-import WeaponCardImage from "@/app/optimiser-v2/components/weapon-card-image";
-import TarkovImage from "@/app/ui/tarkov-image";
-import { TRADER_LEVELS } from "@/app/optimiser-v2/constants";
-import { Surface, Stack, Text } from "@/app/optimiser-v2/components/ui";
+import Panel from "@/app/components/ui/panel";
+import StatBadge from "@/app/components/ui/stat-badge";
+import WeaponCardImage from "@/app/components/client/weapon-card-image";
+import TarkovImage from "@/app/components/client/tarkov-image";
+import { TRADER_LEVELS } from "@/app/lib/constants";
+import { Surface, Stack, Text } from "@/app/components/ui";
 
 type BuildSummaryProps = {
   build: WeaponTree;

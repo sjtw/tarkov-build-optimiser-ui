@@ -25,11 +25,16 @@ export default function WeaponCardImage({
     setFailedWeapon(false);
   }, [weaponId, presetId]);
 
-  const src = failedPreset
-    ? failedWeapon
-      ? "/file.svg"
-      : `/images/tarkov/${weaponId}.webp`
-    : `/images/tarkov/${presetId}.webp`;
+  // Don't try to load images if IDs are missing
+  const hasValidPresetId = presetId && presetId.trim() !== "";
+  const hasValidWeaponId = weaponId && weaponId.trim() !== "";
+
+  const src =
+    !hasValidPresetId || failedPreset
+      ? !hasValidWeaponId || failedWeapon
+        ? "/file.svg"
+        : `/images/tarkov/${weaponId}.webp`
+      : `/images/tarkov/${presetId}.webp`;
 
   return (
     <div
@@ -51,7 +56,6 @@ export default function WeaponCardImage({
             setFailedWeapon(true);
           }
         }}
-        unoptimized
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import Panel from "@/app/ui/panel";
+import Panel from "@/app/components/ui/panel";
 import clsx from "clsx";
 
 type DataStateProps = {

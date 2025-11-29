@@ -1,10 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 import { Item } from "@/app/lib/definitions";
-import TarkovImage from "@/app/ui/tarkov-image";
-import StatLine from "@/app/optimiser-v2/components/tree/stat-line";
-import NodeMeta from "@/app/optimiser-v2/components/tree/node-meta";
-import { Surface, Badge } from "@/app/optimiser-v2/components/ui";
+import TarkovImage from "@/app/components/client/tarkov-image";
+import StatLine from "@/app/components/client/tree/stat-line";
+import NodeMeta from "@/app/components/client/tree/node-meta";
+import { Surface, Badge } from "@/app/components/ui";
 
 type NodeCardProps = {
   item: Item;

@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import clsx from "clsx";
-import { Surface, Text, Stack, Button } from "@/app/optimiser-v2/components/ui";
+import Surface from "@/app/components/ui/surface";
+import Stack from "@/app/components/ui/stack";
+import Text from "@/app/components/ui/text";
+import Button from "@/app/components/ui/button";
 
 type TraderLevelCardProps = {
   label: string;
@@ -25,11 +28,13 @@ export default function TraderLevelCard({
       </div>
       <Stack gap="sm" className="flex-1">
         <Text variant="label">{label}</Text>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-2" role="group" aria-label={`${label} levels`}>
           {levels.map((level) => (
             <Button
               key={level}
               variant="pill"
+              aria-label={`Set ${label} to level ${level}`}
+              aria-pressed={selectedValue === level}
               onClick={() => onSelect(level)}
               className={clsx(
                 selectedValue === level

@@ -5,19 +5,17 @@ import {
   WEAPON_NAME_PARAM,
   WEAPON_PARAM,
   WEAPON_PRESET_PARAM,
-} from "@/app/optimiser-v2/constants";
-import FilterRail from "@/app/optimiser-v2/components/filter-rail";
-import BuildSurface from "@/app/optimiser-v2/components/build-surface";
-import BuildSurfaceSkeleton from "@/app/optimiser-v2/components/build-surface-skeleton";
-import type { Metadata } from "next";
+} from "@/app/lib/constants";
+import {
+  getPresetsByCategory,
+  getCategoriesFromPresets,
+} from "@/app/lib/presets-cache";
+import FilterRail from "./components/client/filter-rail";
+import BuildSurfaceSkeleton from "./components/server/build-surface-skeleton";
+import BuildSurface from "./components/server/build-surface";
 
 type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
-};
-
-export const metadata: Metadata = {
-  title: "Tarkov Build Optimiser",
-  description: "Find the best builds for your favourite weapons in Escape From Tarkov.",
 };
 
 export default async function HomePage({ searchParams }: PageProps) {
@@ -40,10 +38,19 @@ export default async function HomePage({ searchParams }: PageProps) {
       ? resolvedParams[CATEGORY_PARAM]
       : undefined;
 
+  // Fetch weapon presets server-side
+  const presetsByCategory = await getPresetsByCategory();
+  const categories = getCategoriesFromPresets(presetsByCategory);
+
   return (
     <div className="min-h-screen px-4 py-6 lg:px-8 lg:py-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <FilterRail category={category} weaponId={weaponId} />
+        <FilterRail
+          category={category}
+          weaponId={weaponId}
+          presetsByCategory={presetsByCategory}
+          categories={categories}
+        />
         <main className="flex-1">
           <Suspense
             key={`${weaponId}-${JSON.stringify(traderLevels)}`}

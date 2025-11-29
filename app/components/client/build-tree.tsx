@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Item } from "@/app/lib/definitions";
-import { NodeCard, SlotBranch } from "@/app/optimiser-v2/components/tree";
+import { NodeCard, SlotBranch } from "@/app/components/client/tree";
 
 type BuildTreeProps = {
   build: Item;

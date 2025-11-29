@@ -1,10 +1,10 @@
 import React from "react";
 import { TraderLevels } from "@/app/lib/definitions";
 import { getOptimumBuild } from "@/app/lib/optimiser-api";
-import DataState from "@/app/ui/data-state";
-import Panel from "@/app/ui/panel";
-import BuildTree from "@/app/optimiser-v2/components/build-tree";
-import BuildSummary from "@/app/optimiser-v2/components/build-summary";
+import DataState from "@/app/components/server/data-state";
+import Panel from "@/app/components/ui/panel";
+import BuildTree from "@/app/components/client/build-tree";
+import BuildSummary from "@/app/components/server/build-summary";
 
 type BuildSurfaceProps = {
   weaponId?: string;

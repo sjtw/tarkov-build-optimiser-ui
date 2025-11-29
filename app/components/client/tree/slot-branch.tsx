@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Surface, Text } from "@/app/optimiser-v2/components/ui";
+import { Button, Surface, Text } from "@/app/components/ui";
 
 type SlotBranchProps = {
   name: string;

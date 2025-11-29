@@ -25,6 +25,9 @@ export default function TarkovImage({
     setFailed(false);
   }, [itemId]);
 
+  // Don't try to load image if itemId is missing
+  const shouldUseFallback = !itemId || itemId.trim() === "" || failed;
+
   return (
     <div
       className={clsx(
@@ -34,7 +37,7 @@ export default function TarkovImage({
     >
       <Image
         alt={alt}
-        src={failed ? "/file.svg" : `/images/tarkov/${itemId}.webp`}
+        src={shouldUseFallback ? "/file.svg" : `/images/tarkov/${itemId}.webp`}
         width={width}
         height={height}
         className="object-contain"
@@ -43,7 +46,6 @@ export default function TarkovImage({
             setFailed(true);
           }
         }}
-        unoptimized
       />
     </div>
   );

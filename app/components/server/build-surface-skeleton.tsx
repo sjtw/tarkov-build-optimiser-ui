@@ -1,5 +1,5 @@
 import React from "react";
-import Panel from "@/app/ui/panel";
+import Panel from "@/app/components/ui/panel";
 
 export default function BuildSurfaceSkeleton() {
   return (

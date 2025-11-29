@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Text } from "@/app/optimiser-v2/components/ui";
+import { Stack, Text } from "@/app/components/ui";
 
 export default function NodeMeta({
   label,

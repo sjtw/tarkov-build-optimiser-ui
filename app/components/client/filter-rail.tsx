@@ -1,14 +1,7 @@
 "use client";
 
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import Panel from "@/app/ui/panel";
-import { WeaponPresetContext } from "@/app/ui/weapon-preset-context";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Panel from "@/app/components/ui/panel";
 import {
   CATEGORY_PARAM,
   DEFAULT_TRADER_LEVEL,
@@ -16,36 +9,33 @@ import {
   WEAPON_NAME_PARAM,
   WEAPON_PARAM,
   WEAPON_PRESET_PARAM,
-} from "@/app/optimiser-v2/constants";
-import { TraderLevelNames } from "@/app/lib/definitions";
+} from "@/app/lib/constants";
+import { TraderLevelNames, WeaponPreset } from "@/app/lib/definitions";
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import WeaponCardImage from "@/app/optimiser-v2/components/weapon-card-image";
-import TraderLevelCard from "@/app/optimiser-v2/components/trader-level-card";
-import { Text, Button } from "@/app/optimiser-v2/components/ui";
+import WeaponCardImage from "@/app/components/client/weapon-card-image";
+import TraderLevelCard from "@/app/components/server/trader-level-card";
+import { Text, Button } from "@/app/components/ui";
 
 type FilterRailProps = {
   category?: string;
   weaponId?: string;
+  presetsByCategory: Record<string, WeaponPreset[]>;
+  categories: Array<{ label: string; value: string }>;
 };
 
 const levelValues = ["1", "2", "3", "4"];
 
-export default function FilterRail({ category, weaponId }: FilterRailProps) {
-  const { presetsByCategory, status } = useContext(WeaponPresetContext);
+export default function FilterRail({
+  category,
+  weaponId,
+  presetsByCategory,
+  categories,
+}: FilterRailProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-
-  const categories = useMemo(() => {
-    return Object.keys(presetsByCategory)
-      .sort()
-      .map((key) => ({
-        label: key,
-        value: key,
-      }));
-  }, [presetsByCategory]);
 
   const activeCategory = category || categories[0]?.value;
 
@@ -156,6 +146,7 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
                 Category
               </Text>
               <select
+                aria-label="Select weapon category"
                 className="w-full rounded-xl border border-[var(--tarkov-border-strong)] bg-[var(--tarkov-bg-800)]/90 px-3 py-2 text-sm text-white focus:border-[var(--tarkov-highlight)] focus:outline-none"
                 value={activeCategory || ""}
                 onChange={(event) =>
@@ -163,7 +154,7 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
                 }
               >
                 {categories.map((cat) => (
-                  <option key={cat.value} value={cat.value} className="bg-[var(--tarkov-bg-800)] text-black">
+                  <option key={cat.value} value={cat.value}>
                     {cat.label}
                   </option>
             ))}
@@ -176,6 +167,7 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
           <div className="relative">
             <input
               type="text"
+              aria-label="Search weapons by name"
               placeholder="Enter weapon name"
               className="w-full rounded-xl border border-[var(--tarkov-border-strong)] bg-[var(--tarkov-bg-800)]/90 px-3 py-2 pr-10 text-sm text-white placeholder:text-[var(--tarkov-text-muted)] focus:border-[var(--tarkov-highlight)] focus:outline-none"
               value={searchTerm}
@@ -184,6 +176,7 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
             {searchTerm && (
               <button
                 type="button"
+                aria-label="Clear search"
                 onClick={() => setSearchTerm("")}
                 className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--tarkov-border)] bg-[var(--tarkov-panel-muted)]/70 px-2 text-xs text-[var(--tarkov-text-muted)] transition hover:text-white"
               >
@@ -194,20 +187,14 @@ export default function FilterRail({ category, weaponId }: FilterRailProps) {
         </div>
       </div>
           <div className="max-h-[360px] space-y-2 overflow-y-auto pr-2">
-            {status === "pending" && (
-              <Text variant="subtle">Loading presets...</Text>
-            )}
-            {status === "error" && (
-              <Text variant="subtle" className="text-[var(--tarkov-danger)]">
-                Failed to load weapons.
-              </Text>
-            )}
-            {status === "complete" && filteredWeapons.length === 0 && (
+            {filteredWeapons.length === 0 && (
               <Text variant="subtle">No weapons match your filters.</Text>
             )}
             {filteredWeapons.map((preset) => (
               <button
                 key={preset.id}
+                aria-label={`Select ${preset.name}`}
+                aria-pressed={weaponId === preset.properties.baseItem.id}
                 onClick={() =>
                   selectWeapon(
                     preset.properties.baseItem.id,
