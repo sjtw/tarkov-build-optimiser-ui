@@ -24,18 +24,9 @@ Configure the backend URL using environment variables (see below).
 
 ### Environment Setup
 
-1. Create a `.env.local` file in the project root:
-
-```bash
-touch .env.local
-```
-
-2. Configure your environment variables in `.env.local`:
-
 ```env
-# Optimizer Backend API (Required)
+# tarkov-build-optimiser API
 OPTIMISER_API_URL=http://localhost:8080
-
 ```
 
 
@@ -45,10 +36,6 @@ OPTIMISER_API_URL=http://localhost:8080
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
 ```
 
 2. **Download Tarkov item images** (optional, but recommended):
@@ -63,12 +50,6 @@ This script downloads all item and trader images from the Tarkov.dev API and sav
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 The development server uses Turbopack for faster builds and hot module replacement.
@@ -85,15 +66,6 @@ Run the development server with Node.js inspector enabled:
 npm run debug
 ```
 
-### Available Scripts
-
-- `npm run dev` - Start development server with Turbopack
-- `npm run debug` - Start development server with Node.js inspector
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run collect-images` - Download item images from Tarkov.dev API
-
 ### Building for Production
 
 **Option 1: Local Build**
@@ -108,10 +80,6 @@ npm run start
 Build and run using Docker Compose:
 
 ```bash
-# Optionally create a .env file to customize settings
-echo "OPTIMISER_API_URL=http://your-backend:8080" > .env
-echo "PORT=3000" >> .env  # Optional: change host port (container always uses 3000)
-
 docker-compose up --build
 ```
 
