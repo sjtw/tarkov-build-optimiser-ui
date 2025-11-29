@@ -1,5 +1,10 @@
 import { TraderLevels, WeaponTree } from "@/app/lib/definitions";
 
+const OPTIMISER_BASE_URL =
+  process.env.NEXT_PUBLIC_OPTIMISER_API_URL ||
+  process.env.OPTIMISER_API_URL ||
+  "http://localhost:8080";
+
 export async function getOptimumBuild(
   itemId: string,
   traderLevels: TraderLevels,
@@ -11,7 +16,7 @@ export async function getOptimumBuild(
 
   params.set("build_type", "recoil");
 
-  const url = `${process.env.OPTIMISER_API_URL}/api/items/weapons/${itemId}/calculate?${params.toString()}`;
+  const url = `${OPTIMISER_BASE_URL}/api/items/weapons/${itemId}/calculate?${params.toString()}`;
   const res = await fetch(url, {
     method: "GET",
     headers: {

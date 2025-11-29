@@ -16,7 +16,7 @@ export function EvaluationStatus({ status, name }: Props) {
         `${name} currently queued for evaluation, come back later.`}
       {status === "InProgress" &&
         `{name} is currently in progress for this weapon.`}
-      {status === "Failed" && `Evaluation failed for {name}.`}
+      {status === "Failed" && `Evaluation failed for ${name}.`}
       {/*<div>weapon_id: {id}</div>*/}
       {/*<div>prapor_level: {params.get("prapor_level")}</div>*/}
       {/*<div>peacekeeper_level: {params.get("peacekeeper_level")}</div>*/}
