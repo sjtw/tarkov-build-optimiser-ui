@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
-import { getAllImages } from "@/app/lib/tarkov-api";
+import { getAllImages, ItemImageRef, TraderImageRef } from "@/app/lib/tarkov-api";
 
 async function downloadImage(url: string, id: string) {
   const response = await fetch(url);
@@ -30,15 +30,24 @@ async function downloadImage(url: string, id: string) {
   console.log(`Image saved as ${filePath}`);
 }
 
-async function downloadImageRefs(imageRefs: ImageRef[], idParam: 'id' | 'name', linkParam: 'imageLink' | 'baseImageLink') {
-  for (const d of imageRefs) {
-    const id = d[idParam];
-    const link = d[linkParam];
+async function downloadItemImages(items: ItemImageRef[]) {
+  for (const item of items) {
     try {
-      await downloadImage(link, id);
+      await downloadImage(item.baseImageLink, item.id);
     } catch (err) {
       console.error(err);
-      console.warn(`Failed to download ${id} ${link}`);
+      console.warn(`Failed to download item ${item.id} ${item.baseImageLink}`);
+    }
+  }
+}
+
+async function downloadTraderImages(traders: TraderImageRef[]) {
+  for (const trader of traders) {
+    try {
+      await downloadImage(trader.imageLink, trader.name);
+    } catch (err) {
+      console.error(err);
+      console.warn(`Failed to download trader ${trader.name} ${trader.imageLink}`);
     }
   }
 }
@@ -48,8 +57,8 @@ async function run() {
 
   try {
     await Promise.all([
-      await downloadImageRefs(imageData.items, 'id', 'baseImageLink'),
-      await downloadImageRefs(imageData.traders, 'name', 'imageLink')
+      downloadItemImages(imageData.items),
+      downloadTraderImages(imageData.traders)
     ]);
   } catch (err) {
     console.error(err);

@@ -31,15 +31,23 @@ async function execute<T extends UnknownObject>(query: string) {
   }
 }
 
-type ImageRef = {
+export type ItemImageRef = {
   id: string;
   baseImageLink: string;
 };
 
-export async function getAllImages(): Promise<
-  { items: ImageRef[], traders: ImageRef[] }
-> {
-  return await execute<{ id: string; baseImageLink: string }>(`{
+export type TraderImageRef = {
+  name: string;
+  imageLink: string;
+};
+
+type ImagesResponse = {
+  items: ItemImageRef[];
+  traders: TraderImageRef[];
+};
+
+export async function getAllImages(): Promise<ImagesResponse> {
+  return await execute<ImagesResponse>(`{
     items {
       id
       baseImageLink
@@ -51,8 +59,12 @@ export async function getAllImages(): Promise<
   }`);
 }
 
+type PresetsResponse = {
+  items: WeaponPreset[];
+};
+
 export async function getWeaponDefaultPresets(): Promise<WeaponPreset[]> {
-  const presetsResponse = await execute<WeaponPreset>(`
+  const presetsResponse = await execute<PresetsResponse>(`
     {
       items(type: preset, categoryNames: Weapon) {
         id
