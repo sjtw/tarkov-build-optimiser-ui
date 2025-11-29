@@ -17,27 +17,27 @@ export const TRADER_LEVELS: TraderLevelConfig[] = [
   {
     label: "Prapor",
     param: TraderLevelNames.Prapor,
-    image: "/images/tarkov/traders/Prapor.webp",
+    image: "/images/tarkov/Prapor.webp",
   },
   {
     label: "Peacekeeper",
     param: TraderLevelNames.Peacekeeper,
-    image: "/images/tarkov/traders/Peacekeeper.webp",
+    image: "/images/tarkov/Peacekeeper.webp",
   },
   {
     label: "Mechanic",
     param: TraderLevelNames.Mechanic,
-    image: "/images/tarkov/traders/Mechanic.webp",
+    image: "/images/tarkov/Mechanic.webp",
   },
   {
     label: "Skier",
     param: TraderLevelNames.Skier,
-    image: "/images/tarkov/traders/Skier.webp",
+    image: "/images/tarkov/Skier.webp",
   },
   {
     label: "Jaeger",
     param: TraderLevelNames.Jaeger,
-    image: "/images/tarkov/traders/Jaeger.webp",
+    image: "/images/tarkov/Jaeger.webp",
   },
 ];
 
