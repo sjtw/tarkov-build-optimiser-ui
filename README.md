@@ -11,16 +11,8 @@ A Next.js web application for visualising Escape from Tarkov weapon builds gener
 
 - Node.js 18.x or later
 - npm, yarn, pnpm, or bun
-- **Tarkov Build Optimizer Backend** - This frontend requires a backend API service for build calculations
+- [Tarkov Build Optimizer Backend](https://github.com/sjtw/tarkov-build-optimiser) - This frontend requires a backend API service for build calculations
 
-### Backend Dependency
-
-This application requires a running instance of the Tarkov Build Optimizer backend API. The backend performs the weapon build optimization calculations.
-
-- **Default URL**: `http://localhost:8080`
-- **Required Endpoint**: `/api/items/weapons/{itemId}/calculate`
-
-Configure the backend URL using environment variables (see below).
 
 ### Environment Setup
 
