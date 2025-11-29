@@ -7,12 +7,6 @@ export default function NavItems() {
         href="/"
         className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
       >
-        Home
-      </Link>
-      <Link
-        href="/optimiser"
-        className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-      >
         Optimiser
       </Link>
     </div>

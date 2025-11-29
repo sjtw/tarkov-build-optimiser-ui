@@ -1,7 +1,63 @@
-import { redirect } from "next/navigation";
+import React, { Suspense } from "react";
+import {
+  CATEGORY_PARAM,
+  deriveTraderLevels,
+  WEAPON_NAME_PARAM,
+  WEAPON_PARAM,
+  WEAPON_PRESET_PARAM,
+} from "@/app/optimiser-v2/constants";
+import FilterRail from "@/app/optimiser-v2/_components/filter-rail";
+import BuildSurface from "@/app/optimiser-v2/_components/build-surface";
+import BuildSurfaceSkeleton from "@/app/optimiser-v2/_components/build-surface-skeleton";
+import type { Metadata } from "next";
 
-export default function Home() {
-  redirect("/optimiser");
+type PageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
-  return <></>;
+export const metadata: Metadata = {
+  title: "Optimiser",
+  description: "Visualise Escape From Tarkov weapon builds with style.",
+};
+
+export default async function HomePage({ searchParams }: PageProps) {
+  const resolvedParams = await searchParams;
+  const traderLevels = deriveTraderLevels(resolvedParams);
+  const weaponId =
+    typeof resolvedParams[WEAPON_PARAM] === "string"
+      ? resolvedParams[WEAPON_PARAM]
+      : undefined;
+  const weaponName =
+    typeof resolvedParams[WEAPON_NAME_PARAM] === "string"
+      ? resolvedParams[WEAPON_NAME_PARAM]
+      : undefined;
+  const weaponPresetId =
+    typeof resolvedParams[WEAPON_PRESET_PARAM] === "string"
+      ? resolvedParams[WEAPON_PRESET_PARAM]
+      : undefined;
+  const category =
+    typeof resolvedParams[CATEGORY_PARAM] === "string"
+      ? resolvedParams[CATEGORY_PARAM]
+      : undefined;
+
+  return (
+    <div className="min-h-screen px-4 py-6 lg:px-8 lg:py-10">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+        <FilterRail category={category} weaponId={weaponId} />
+        <main className="flex-1">
+          <Suspense
+            key={`${weaponId}-${JSON.stringify(traderLevels)}`}
+            fallback={<BuildSurfaceSkeleton />}
+          >
+            <BuildSurface
+              weaponId={weaponId}
+              weaponName={weaponName}
+              weaponPresetId={weaponPresetId}
+              traderLevels={traderLevels}
+            />
+          </Suspense>
+        </main>
+      </div>
+    </div>
+  );
 }

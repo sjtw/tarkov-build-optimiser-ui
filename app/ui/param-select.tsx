@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Select from "@/app/ui/select";
 
@@ -34,10 +34,10 @@ function ParamSelect({
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const onChange = (newValue: string) => {
+  const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set(param, newValue);
+    params.set(param, e.target.value);
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -49,6 +49,7 @@ function ParamSelect({
       options={options}
       value={value}
       className={className}
+      param={param}
       onChange={onChange}
     />
   );
