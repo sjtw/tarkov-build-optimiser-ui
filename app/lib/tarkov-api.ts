@@ -4,7 +4,7 @@ const API_URL = "https://api.tarkov.dev/graphql";
 
 type UnknownObject = { [key: string]: unknown };
 
-type TarkovDevItemsResponse<T extends UnknownObject> = {
+type TarkovDevResponse<T extends UnknownObject> = {
   data: T;
 };
 
