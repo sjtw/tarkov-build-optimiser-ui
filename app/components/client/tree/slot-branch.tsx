@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button, Surface, Text } from "@/app/components/ui";
 

@@ -14,7 +14,7 @@ import { TraderLevelNames, WeaponPreset } from "@/app/lib/definitions";
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import WeaponCardImage from "@/app/components/client/weapon-card-image";
-import TraderLevelCard from "@/app/components/server/trader-level-card";
+import TraderLevelCard from "@/app/components/client/trader-level-card";
 import { Text, Button } from "@/app/components/ui";
 
 type FilterRailProps = {
