@@ -1,9 +1,7 @@
 import { TraderLevels, WeaponTree } from "@/app/lib/definitions";
 
 const OPTIMISER_BASE_URL =
-  process.env.NEXT_PUBLIC_OPTIMISER_API_URL ||
-  process.env.OPTIMISER_API_URL ||
-  "http://localhost:8080";
+  process.env.OPTIMISER_API_URL || "http://localhost:8080";
 
 /**
  * Fetches the optimum weapon build configuration from the optimiser API.

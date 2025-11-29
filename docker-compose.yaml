@@ -6,11 +6,7 @@ services:
       dockerfile: ./Dockerfile
     container_name: tarkov-build-optimiser-web
     environment:
-      - NODE_ENV=${NODE_ENV}
-      - POSTGRES_URL=${POSTGRES_URL}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - NODE_ENV=${NODE_ENV:-production}
+      - OPTIMISER_API_URL=${OPTIMISER_API_URL}
     ports:
-      - "${PORT}:3000"
+      - "${PORT:-3000}:3000"
