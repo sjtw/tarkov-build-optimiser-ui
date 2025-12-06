@@ -14,13 +14,13 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
     "next": "15.4.8",
-    "pg": "^8.13.1",
+    "pg": "^8.16.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/pg": "^8.11.10",
+    "@types/pg": "^8.15.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
