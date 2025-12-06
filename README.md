@@ -58,6 +58,29 @@ Run the development server with Node.js inspector enabled:
 npm run debug
 ```
 
+### Testing
+
+The project includes E2E tests using Playwright:
+
+```bash
+# Run E2E tests
+npm run test:e2e
+
+# Run with interactive UI
+npm run test:e2e:ui
+
+# Run in debug mode
+npm run test:e2e:debug
+```
+
+**First time setup**: Install Playwright browsers:
+
+```bash
+npx playwright install chromium
+```
+
+See [tests/README.md](tests/README.md) for more information.
+
 ### Building for Production
 
 **Option 1: Local Build**
