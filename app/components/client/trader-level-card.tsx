@@ -25,7 +25,7 @@ export default function TraderLevelCard({
 }: TraderLevelCardProps) {
   return (
     <Surface variant="panel" className="flex items-stretch gap-3 p-3">
-      <div className="relative aspect-square flex-shrink-0 self-stretch overflow-hidden rounded-xl border border-[var(--tarkov-border)] bg-[var(--tarkov-panel)]">
+      <div className="relative aspect-square w-16 flex-shrink-0 overflow-hidden rounded-xl border border-[var(--tarkov-border)] bg-[var(--tarkov-panel)]">
         <Image src={image} alt={label} fill sizes="80px" className="object-cover" />
       </div>
       <Stack gap="sm" className="flex-1">
