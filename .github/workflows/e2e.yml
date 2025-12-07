@@ -45,6 +45,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Cache Tarkov images
+        id: image-cache
+        uses: actions/cache@v4
+        with:
+          path: public/images/tarkov
+          key: tarkov-images-v1
+          restore-keys: |
+            tarkov-images-
+
+      - name: Download Tarkov images
+        if: steps.image-cache.outputs.cache-hit != 'true'
+        run: pnpm collect-images
+        env:
+          NODE_ENV: production
+
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
