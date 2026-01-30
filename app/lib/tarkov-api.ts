@@ -5,7 +5,12 @@ const API_URL = "https://api.tarkov.dev/graphql";
 type UnknownObject = { [key: string]: unknown };
 
 type TarkovDevResponse<T extends UnknownObject> = {
-  data: T;
+  data?: T;
+  errors?: Array<{
+    message: string;
+    locations?: Array<{ line: number; column: number }>;
+    path?: string[];
+  }>;
 };
 
 /**
@@ -14,7 +19,7 @@ type TarkovDevResponse<T extends UnknownObject> = {
  * @template T - The expected shape of the response data
  * @param query - GraphQL query string to execute
  * @returns Promise resolving to the response data
- * @throws Error if the API responds with a non-200 status code
+ * @throws Error if the API responds with a non-200 status code or GraphQL errors
  */
 async function execute<T extends UnknownObject>(query: string) {
   const res = await fetch(API_URL, {
@@ -28,15 +33,25 @@ async function execute<T extends UnknownObject>(query: string) {
     }),
   });
 
-  if (res.status === 200) {
-    const body = (await res.json()) as TarkovDevResponse<T>;
-
-    return body.data;
-  } else {
+  if (!res.ok) {
     throw new Error(
       `Tarkov.dev responded with unexpected status - ${res.status}`,
     );
   }
+
+  const body = (await res.json()) as TarkovDevResponse<T>;
+
+  if (body.errors && body.errors.length > 0) {
+    throw new Error(
+      `GraphQL errors: ${body.errors.map((e) => e.message).join(", ")}`,
+    );
+  }
+
+  if (!body.data) {
+    throw new Error("GraphQL response missing data field");
+  }
+
+  return body.data;
 }
 
 export type ItemImageRef = {
@@ -86,7 +101,7 @@ type PresetsResponse = {
 export async function getWeaponDefaultPresets(): Promise<WeaponPreset[]> {
   const presetsResponse = await execute<PresetsResponse>(`
     {
-      items(type: preset, categoryNames: Weapon) {
+      items(type: preset, categoryNames: "Weapon") {
         id
         name
         gridImageLink
@@ -106,5 +121,11 @@ export async function getWeaponDefaultPresets(): Promise<WeaponPreset[]> {
       }
     }`);
 
-    return presetsResponse.items;
+  if (!presetsResponse.items) {
+    throw new Error(
+      "Unexpected API response structure: missing items field",
+    );
+  }
+
+  return presetsResponse.items;
 }
