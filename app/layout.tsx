@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "Tarkov Build Optimiser | %s",
     default: "Tarkov Build Optimiser",
   },
-  description: "blah blah",
+  description: "Optimal weapon builds for EFT",
 };
 
 export default function RootLayout({
