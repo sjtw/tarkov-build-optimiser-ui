@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -28,7 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden`}>
+      {process.env.NEXT_PUBLIC_GA_TAGID && (
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GA_TAGID} />
+      )}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden`}
+      >
         <div className="optimiser-v2-shell min-h-screen">
           <div className="flex h-screen flex-col">
             <div className="flex-1 overflow-y-auto">{children}</div>
